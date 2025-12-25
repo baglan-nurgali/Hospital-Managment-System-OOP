@@ -1,35 +1,38 @@
 public class Doctor {
     private int doctorId;
     private String name;
-    private String specialization;
-    private int experienceYears;
+    private String department;
+    private boolean onDuty;
 
-    public Doctor(int doctorId, String name, String specialization, int experienceYears) {
+    public Doctor(int doctorId, String name, String department, boolean onDuty) {
         this.doctorId = doctorId;
         this.name = name;
-        this.specialization = specialization;
-        this.experienceYears = experienceYears;
+        this.department = department;
+        this.onDuty = onDuty;
     }
 
-    // Геттеры и сеттеры
+    public int getDoctorId() { return doctorId; }
+    public void setDoctorId(int doctorId) { this.doctorId = doctorId; }
+
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
-    public int getExperienceYears() { return experienceYears; }
-    public void setExperienceYears(int experienceYears) { this.experienceYears = experienceYears; }
-    public String getSpecialization() { return specialization; }
-    public void setSpecialization(String specialization) { this.specialization = specialization; }
 
-    // Дополнительные методы [cite: 206]
-    public boolean isExperienced() {
-        return experienceYears > 10;
+    public String getDepartment() { return department; }
+    public void setDepartment(String department) { this.department = department; }
+
+    public boolean isOnDuty() { return onDuty; }
+    public void setOnDuty(boolean onDuty) { this.onDuty = onDuty; }
+
+    public void toggleDuty() {
+        this.onDuty = !this.onDuty;
     }
 
-    public boolean canPerformSurgery() {
-        return specialization.equalsIgnoreCase("Surgeon") && experienceYears >= 5;
+    public String getContactFormat() {
+        return "Dr. " + name + " (" + department + ")";
     }
 
     @Override
     public String toString() {
-        return "Doctor{ID=" + doctorId + ", Name='" + name + "', Spec='" + specialization + "', Exp=" + experienceYears + "y}";
+        return "Doctor{" + "id=" + doctorId + ", name='" + name + '\'' + ", dept='" + department + '\'' + ", active=" + onDuty + '}';
     }
 }

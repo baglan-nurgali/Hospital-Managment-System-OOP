@@ -1,33 +1,38 @@
 public class Appointment {
-    private int appointmentId;
+    private String appointmentId;
     private String patientName;
-    private String doctorName;
-    private String status; // "Scheduled", "Completed", "Cancelled"
+    private String time;
+    private double consultationFee;
 
-    public Appointment(int appointmentId, String patientName, String doctorName, String status) {
+    public Appointment(String appointmentId, String patientName, String time, double consultationFee) {
         this.appointmentId = appointmentId;
         this.patientName = patientName;
-        this.doctorName = doctorName;
-        this.status = status;
+        this.time = time;
+        this.consultationFee = consultationFee;
     }
 
-    // Геттеры и сеттеры
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
-    public int getAppointmentId() { return appointmentId; }
+    public String getAppointmentId() { return appointmentId; }
+    public void setAppointmentId(String appointmentId) { this.appointmentId = appointmentId; }
 
-    // Дополнительные методы [cite: 206]
-    public void cancel() {
-        this.status = "Cancelled";
-        System.out.println("Appointment " + appointmentId + " has been cancelled.");
+    public String getPatientName() { return patientName; }
+    public void setPatientName(String patientName) { this.patientName = patientName; }
+
+    public String getTime() { return time; }
+    public void setTime(String time) { this.time = time; }
+
+    public double getConsultationFee() { return consultationFee; }
+    public void setConsultationFee(double consultationFee) { this.consultationFee = consultationFee; }
+
+    public void applyUrgentSurcharge(double amount) {
+        this.consultationFee += amount;
     }
 
-    public boolean isUpcoming() {
-        return status.equalsIgnoreCase("Scheduled");
+    public boolean isEveningSession() {
+        return time.contains("PM") || time.contains("18:") || time.contains("19:");
     }
 
     @Override
     public String toString() {
-        return "Appointment{ID=" + appointmentId + ", Patient='" + patientName + "', Doctor='" + doctorName + "', Status='" + status + "'}";
+        return "Appointment ID: " + appointmentId + " | Patient: " + patientName + " | Time: " + time + " | Fee: " + consultationFee;
     }
 }

@@ -1,50 +1,43 @@
 public class Patient {
-    // 1. Приватные поля (минимум 4) [cite: 12, 57, 61]
-    private int patientId;
-    private String fullName;
+    private int id;
+    private String name;
     private int age;
-    private String bloodType;
-    // 2. Конструктор с параметрами [cite: 13, 57, 67]
-    public Patient (int patientId, String fullName, int age, String bloodType) {
-        this.patientId = patientId; // Использование "this" [cite: 69]
-        this.fullName = fullName;
+    private String bloodGroup;
+
+    public Patient(int id, String name, int age, String bloodGroup) {
+        this.id = id;
+        this.name = name;
         this.age = age;
-        this.bloodType = bloodType;
+        this.bloodGroup = bloodGroup;
     }
 
-    // 3. Дефолтный конструктор [cite: 57, 70]
     public Patient() {
-        this.fullName = "Unknown Patient";
-        this.bloodType = "Unknown";
+        this.name = "New Patient";
+        this.bloodGroup = "Unknown";
     }
 
-    // 4. Геттеры и сеттеры для всех полей [cite: 57, 74, 79]
-    public int getPatientId() { return patientId; }
-    public void setPatientId(int patientId) { this.patientId = patientId; }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public String getFullName() { return fullName; }
-    public void setFullName(String fullName) { this.fullName = fullName; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
     public int getAge() { return age; }
     public void setAge(int age) { this.age = age; }
 
-    public String getBloodType() { return bloodType; }
-    public void setBloodType(String bloodType) { this.bloodType = bloodType; }
+    public String getBloodGroup() { return bloodGroup; }
+    public void setBloodGroup(String bloodGroup) { this.bloodGroup = bloodGroup; }
 
-    // 5. Дополнительные методы с логикой (минимум 2) [cite: 14, 57, 84]
-    public boolean isMinor() {
-        return age < 18; // Логика проверки возраста [cite: 206]
+    public boolean isAdult() {
+        return age >= 18;
     }
 
-    public String getAgeCategory() {
-        if (age < 13) return "Child";
-        if (age < 60) return "Adult";
-        return "Senior"; // Логика определения категории [cite: 206]
+    public String getMedicalPriority() {
+        return (age < 5 || age > 70) ? "High" : "Normal";
     }
 
-    // 6. toString() [cite: 57, 90]
     @Override
     public String toString() {
-        return "Patient{ID=" + patientId + ", Name='" + fullName + "', Age=" + age + ", Blood='" + bloodType + "'}";
+        return String.format("Patient[ID: %d, Name: %s, Age: %d, Blood: %s]", id, name, age, bloodGroup);
     }
 }
