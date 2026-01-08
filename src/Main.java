@@ -3,11 +3,12 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
         ArrayList<Person> hospitalRegistry = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
 
-        // Initial Test Data
-        hospitalRegistry.add(new Doctor("Gregory House", 45, "Diagnostics"));
+        // tipo umniy
+        hospitalRegistry.add(new Doctor("Gregory House", 45, "Diagnosticws"));
         hospitalRegistry.add(new Patient("John Doe", 25, "Flu"));
 
         boolean running = true;
