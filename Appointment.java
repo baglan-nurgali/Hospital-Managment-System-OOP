@@ -1,38 +1,21 @@
 public class Appointment {
-    private String appointmentId;
-    private String patientName;
-    private String time;
-    private double consultationFee;
+    private Doctor doctor;
+    private Patient patient;
+    private double cost;
 
-    public Appointment(String appointmentId, String patientName, String time, double consultationFee) {
-        this.appointmentId = appointmentId;
-        this.patientName = patientName;
-        this.time = time;
-        this.consultationFee = consultationFee;
+    public Appointment(Doctor doctor, Patient patient, double cost) throws InvalidDataException {
+        this.doctor = doctor;
+        this.patient = patient;
+        setCost(cost);
     }
 
-    public String getAppointmentId() { return appointmentId; }
-    public void setAppointmentId(String appointmentId) { this.appointmentId = appointmentId; }
-
-    public String getPatientName() { return patientName; }
-    public void setPatientName(String patientName) { this.patientName = patientName; }
-
-    public String getTime() { return time; }
-    public void setTime(String time) { this.time = time; }
-
-    public double getConsultationFee() { return consultationFee; }
-    public void setConsultationFee(double consultationFee) { this.consultationFee = consultationFee; }
-
-    public void applyUrgentSurcharge(double amount) {
-        this.consultationFee += amount;
-    }
-
-    public boolean isEveningSession() {
-        return time.contains("PM") || time.contains("18:") || time.contains("19:");
+    public void setCost(double cost) throws InvalidDataException {
+        if (cost < 0) throw new InvalidDataException("Cost cannot be negative!");
+        this.cost = cost;
     }
 
     @Override
     public String toString() {
-        return "Appointment ID: " + appointmentId + " | Patient: " + patientName + " | Time: " + time + " | Fee: " + consultationFee;
+        return "Appointment: Doctor " + doctor.getName() + " is seeing " + patient.getName() + " (Cost: $" + cost + ")";
     }
 }

@@ -1,38 +1,18 @@
-public class Doctor {
-    private int doctorId;
-    private String name;
-    private String department;
-    private boolean onDuty;
+public class Doctor extends Person {
+    private String specialty;
 
-    public Doctor(int doctorId, String name, String department, boolean onDuty) {
-        this.doctorId = doctorId;
-        this.name = name;
-        this.department = department;
-        this.onDuty = onDuty;
-    }
-
-    public int getDoctorId() { return doctorId; }
-    public void setDoctorId(int doctorId) { this.doctorId = doctorId; }
-
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public String getDepartment() { return department; }
-    public void setDepartment(String department) { this.department = department; }
-
-    public boolean isOnDuty() { return onDuty; }
-    public void setOnDuty(boolean onDuty) { this.onDuty = onDuty; }
-
-    public void toggleDuty() {
-        this.onDuty = !this.onDuty;
-    }
-
-    public String getContactFormat() {
-        return "Dr. " + name + " (" + department + ")";
+    public Doctor(String name, int age, String specialty) throws InvalidDataException {
+        super(name, age);
+        this.specialty = specialty;
     }
 
     @Override
-    public String toString() {
-        return "Doctor{" + "id=" + doctorId + ", name='" + name + '\'' + ", dept='" + department + '\'' + ", active=" + onDuty + '}';
+    public void performAction() {
+        System.out.println("Doctor " + name + " is examining patients in " + specialty);
+    }
+
+    @Override
+    public String getDetails() {
+        return "[Doctor] " + toString() + ", Specialty: " + specialty;
     }
 }

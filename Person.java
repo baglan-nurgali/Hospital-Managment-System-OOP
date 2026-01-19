@@ -1,35 +1,27 @@
-public class Person {
+public abstract class Person implements HospitalOperations {
     protected String name;
     protected int age;
 
-    public Person(String name, int age) {
+    public Person(String name, int age) throws InvalidDataException {
         setName(name);
         setAge(age);
     }
 
-    public String getName() { return name; }
-
-    public void setName(String name) {
+    public void setName(String name) throws InvalidDataException {
         if (name == null || name.trim().isEmpty()) {
-            this.name = "Unknown";
-        } else {
-            this.name = name;
+            throw new InvalidDataException("Name cannot be empty!");
         }
+        this.name = name;
     }
 
-    public int getAge() { return age; }
-
-    public void setAge(int age) {
-        if (age >= 0 && age <= 120) {
-            this.age = age;
-        } else {
-            this.age = 0;
+    public void setAge(int age) throws InvalidDataException {
+        if (age < 0 || age > 120) {
+            throw new InvalidDataException("Age must be between 0 and 120!");
         }
+        this.age = age;
     }
 
-    public void performAction() {
-        System.out.println(name + " is performing a general action.");
-    }
+    public String getName() { return name; }
 
     @Override
     public String toString() {

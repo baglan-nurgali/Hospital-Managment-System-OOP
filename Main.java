@@ -1,43 +1,82 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("=== HOSPITAL MANAGEMENT SYSTEM DATABASE ===");
+        ArrayList<Person> registry = new ArrayList<>();
+        Scanner sc = new Scanner(System.in);
 
-        Patient p1 = new Patient(101, "Alice Freeman", 72, "O+");
-        Patient p2 = new Patient();
-        Doctor d1 = new Doctor(202, "Gregory House", "Diagnostics", true);
-        Appointment a1 = new Appointment("APP-001", "Alice Freeman", "10:30 AM", 5000.0);
-        Appointment a2 = new Appointment("APP-002", "Bob Smith", "18:45 PM", 4500.0);
+        // 1. Предварительные данные (Initial Data)
+        try {
+            registry.add(new Doctor("Gregory House", 45, "Diagnostics"));
+            registry.add(new Patient("John Doe", 28, "Flu"));
+        } catch (InvalidDataException e) {
+            System.out.println("Initialization Error: " + e.getMessage());
+        }
 
-        System.out.println("\n--- REGISTRY ---");
-        System.out.println(p1);
-        System.out.println(d1);
-        System.out.println(a1);
+        while (true) {
+            System.out.println("\n--- HOSPITAL MANAGEMENT SYSTEM (Assignment 3) ---");
+            System.out.println("1. View All Registry");
+            System.out.println("2. Add New Doctor");
+            System.out.println("3. Add New Patient");
+            System.out.println("4. Exit");
+            System.out.print("Select an option: ");
 
-        System.out.println("\n--- ACTIONS & LOGIC ---");
+            int choice = sc.nextInt();
+            sc.nextLine(); // Очистка буфера
 
-        System.out.println("Updating default patient...");
-        p2.setName("John Doe");
-        p2.setAge(30);
-        System.out.println("New entry: " + p2.getName() + " (Adult: " + p2.isAdult() + ")");
+            if (choice == 4) break;
 
-        System.out.println("Checking " + p1.getName() + " priority: " + p1.getMedicalPriority());
+            // КЛЮЧЕВОЙ МОМЕНТ: Весь ввод данных обернут в try-catch
+            try {
+                switch (choice) {
+                    case 1:
+                        System.out.println("\n--- Current Records ---");
+                        for (Person p : registry) {
+                            System.out.println(p.getDetails());
+                            p.performAction(); // Полиморфизм
+                        }
+                        break;
 
-        System.out.println("Status of " + d1.getContactFormat() + ": On Duty = " + d1.isOnDuty());
-        d1.toggleDuty();
-        System.out.println("New status: On Duty = " + d1.isOnDuty());
+                    case 2:
+                        System.out.print("Doctor Name: ");
+                        String dName = sc.nextLine();
+                        System.out.print("Age: ");
+                        int dAge = sc.nextInt();
+                        sc.nextLine();
+                        System.out.print("Specialty: ");
+                        String spec = sc.nextLine();
 
-        System.out.println("Checking session time for " + a2.getPatientName() + ": Evening = " + a2.isEveningSession());
-        System.out.println("Applying urgent surcharge to " + a1.getAppointmentId());
-        a1.applyUrgentSurcharge(1500.0);
-        System.out.println("Updated Fee: " + a1.getConsultationFee());
+                        // Если данные неверны, конструктор выбросит Exception
+                        registry.add(new Doctor(dName, dAge, spec));
+                        System.out.println("Doctor added successfully!");
+                        break;
 
-        System.out.println("\n--- FINAL SUMMARY ---");
-        System.out.println(p1);
-        System.out.println(p2);
-        System.out.println(d1);
-        System.out.println(a1);
-        System.out.println(a2);
+                    case 3:
+                        System.out.print("Patient Name: ");
+                        String pName = sc.nextLine();
+                        System.out.print("Age: ");
+                        int pAge = sc.nextInt();
+                        sc.nextLine();
+                        System.out.print("Diagnosis: ");
+                        String diag = sc.nextLine();
 
-        System.out.println("\n=== SYSTEM OFFLINE ===");
+                        registry.add(new Patient(pName, pAge, diag));
+                        System.out.println("Patient added successfully!");
+                        break;
+
+                    default:
+                        System.out.println("Invalid option.");
+                }
+            } catch (InvalidDataException e) {
+                // Если сработала валидация (например, возраст -5), мы ловим ошибку здесь
+                System.out.println("\n[VALIDATION ERROR]: " + e.getMessage());
+                System.out.println("Record was not added. Please try again.");
+            } catch (Exception e) {
+                System.out.println("An unexpected error occurred.");
+                sc.nextLine(); // Очистка в случае неверного типа ввода
+            }
+        }
+        sc.close();
     }
 }
