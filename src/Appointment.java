@@ -1,26 +1,21 @@
 public class Appointment {
-    private String appointmentId;
+    private Doctor doctor;
     private Patient patient;
-    private double fee;
+    private double cost;
 
-    public Appointment(String appointmentId, Patient patient, double fee) {
-        setAppointmentId(appointmentId);
+    public Appointment(Doctor doctor, Patient patient, double cost) throws InvalidDataException {
+        this.doctor = doctor;
         this.patient = patient;
-        setFee(fee);
+        setCost(cost);
     }
 
-    public void setAppointmentId(String id) {
-        this.appointmentId = (id == null || id.isEmpty()) ? "APP-000" : id;
+    public void setCost(double cost) throws InvalidDataException {
+        if (cost < 0) throw new InvalidDataException("Cost cannot be negative!");
+        this.cost = cost;
     }
-
-    public void setFee(double fee) {
-        this.fee = (fee >= 0) ? fee : 0.0;
-    }
-
-    public double getFee() { return fee; }
 
     @Override
     public String toString() {
-        return "Appointment [" + appointmentId + "] | Patient: " + patient.getName() + " | Fee: $" + fee;
+        return "Appointment: Doctor " + doctor.getName() + " is seeing " + patient.getName() + " (Cost: $" + cost + ")";
     }
 }

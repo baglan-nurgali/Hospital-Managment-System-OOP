@@ -3,70 +3,80 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        ArrayList<Person> registry = new ArrayList<>();
+        Scanner sc = new Scanner(System.in);
 
-        ArrayList<Person> hospitalRegistry = new ArrayList<>();
-        Scanner scanner = new Scanner(System.in);
+        // 1. Предварительные данные (Initial Data)
+        try {
+            registry.add(new Doctor("Gregory House", 45, "Diagnostics"));
+            registry.add(new Patient("John Doe", 28, "Flu"));
+        } catch (InvalidDataException e) {
+            System.out.println("Initialization Error: " + e.getMessage());
+        }
 
-        // tipo umniy
-        hospitalRegistry.add(new Doctor("Gregory House", 45, "Diagnosticws"));
-        hospitalRegistry.add(new Patient("John Doe", 25, "Flu"));
-
-        boolean running = true;
-        while (running) {
-            System.out.println("\n--- HOSPITAL MANAGEMENT SYSTEM ---");
+        while (true) {
+            System.out.println("\n--- HOSPITAL MANAGEMENT SYSTEM (Assignment 3) ---");
             System.out.println("1. View All Registry");
-            System.out.println("2. Add New Patient");
-            System.out.println("3. Add New Doctor");
-            System.out.println("4. Demonstrate Polymorphism (Perform Actions)");
-            System.out.println("0. Exit");
+            System.out.println("2. Add New Doctor");
+            System.out.println("3. Add New Patient");
+            System.out.println("4. Exit");
             System.out.print("Select an option: ");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            int choice = sc.nextInt();
+            sc.nextLine(); // Очистка буфера
 
-            switch (choice) {
-                case 1:
-                    System.out.println("\n--- Current Registry ---");
-                    for (Person p : hospitalRegistry) {
-                        System.out.println(p);
-                    }
-                    break;
-                case 2:
-                    System.out.print("Enter Patient Name: ");
-                    String pName = scanner.nextLine();
-                    System.out.print("Enter Age: ");
-                    int pAge = scanner.nextInt();
-                    scanner.nextLine();
-                    System.out.print("Enter Diagnosis: ");
-                    String diag = scanner.nextLine();
-                    hospitalRegistry.add(new Patient(pName, pAge, diag));
-                    System.out.println("Patient added successfully!");
-                    break;
-                case 3:
-                    System.out.print("Enter Doctor Name: ");
-                    String dName = scanner.nextLine();
-                    System.out.print("Enter Age: ");
-                    int dAge = scanner.nextInt();
-                    scanner.nextLine();
-                    System.out.print("Enter Specialty: ");
-                    String spec = scanner.nextLine();
-                    hospitalRegistry.add(new Doctor(dName, dAge, spec));
-                    System.out.println("Doctor added successfully!");
-                    break;
-                case 4:
-                    System.out.println("\n--- Demonstrating Polymorphism ---");
-                    for (Person p : hospitalRegistry) {
-                        p.performAction();
-                    }
-                    break;
-                case 0:
-                    running = false;
-                    System.out.println("Exiting system... Goodbye!");
-                    break;
-                default:
-                    System.out.println("Error: Invalid option. Try again.");
+            if (choice == 4) break;
+
+            // КЛЮЧЕВОЙ МОМЕНТ: Весь ввод данных обернут в try-catch
+            try {
+                switch (choice) {
+                    case 1:
+                        System.out.println("\n--- Current Records ---");
+                        for (Person p : registry) {
+                            System.out.println(p.getDetails());
+                            p.performAction(); // Полиморфизм
+                        }
+                        break;
+
+                    case 2:
+                        System.out.print("Doctor Name: ");
+                        String dName = sc.nextLine();
+                        System.out.print("Age: ");
+                        int dAge = sc.nextInt();
+                        sc.nextLine();
+                        System.out.print("Specialty: ");
+                        String spec = sc.nextLine();
+
+                        // Если данные неверны, конструктор выбросит Exception
+                        registry.add(new Doctor(dName, dAge, spec));
+                        System.out.println("Doctor added successfully!");
+                        break;
+
+                    case 3:
+                        System.out.print("Patient Name: ");
+                        String pName = sc.nextLine();
+                        System.out.print("Age: ");
+                        int pAge = sc.nextInt();
+                        sc.nextLine();
+                        System.out.print("Diagnosis: ");
+                        String diag = sc.nextLine();
+
+                        registry.add(new Patient(pName, pAge, diag));
+                        System.out.println("Patient added successfully!");
+                        break;
+
+                    default:
+                        System.out.println("Invalid option.");
+                }
+            } catch (InvalidDataException e) {
+                // Если сработала валидация (например, возраст -5), мы ловим ошибку здесь
+                System.out.println("\n[VALIDATION ERROR]: " + e.getMessage());
+                System.out.println("Record was not added. Please try again.");
+            } catch (Exception e) {
+                System.out.println("An unexpected error occurred.");
+                sc.nextLine(); // Очистка в случае неверного типа ввода
             }
         }
-        scanner.close();
+        sc.close();
     }
 }
