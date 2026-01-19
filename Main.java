@@ -15,7 +15,7 @@ public class Main {
         }
 
         while (true) {
-            System.out.println("\n--- HOSPITAL MANAGEMENT SYSTEM (Assignment 3) ---");
+            System.out.println("\n--- HOSPITAL MANAGEMENT SYSTEM  ---");
             System.out.println("1. View All Registry");
             System.out.println("2. Add New Doctor");
             System.out.println("3. Add New Patient");
