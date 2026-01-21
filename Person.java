@@ -1,30 +1,30 @@
-public abstract class Person implements HospitalOperations {
-    protected String name;
-    protected int age;
+package model;
 
-    public Person(String name, int age) throws InvalidDataException {
+public abstract class Person {
+    private int id;
+    private String name;
+    private int age;
+
+    public Person(int id, String name, int age) {
+        setId(id);
         setName(name);
         setAge(age);
     }
 
-    public void setName(String name) throws InvalidDataException {
-        if (name == null || name.trim().isEmpty()) {
-            throw new InvalidDataException("Name cannot be empty!");
-        }
+    public abstract void performRole();
+
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+
+    public String getName() { return name; }
+    public void setName(String name) {
+        if (name == null || name.isEmpty()) throw new IllegalArgumentException("Name is empty");
         this.name = name;
     }
 
-    public void setAge(int age) throws InvalidDataException {
-        if (age < 0 || age > 120) {
-            throw new InvalidDataException("Age must be between 0 and 120!");
-        }
+    public int getAge() { return age; }
+    public void setAge(int age) {
+        if (age < 0 || age > 120) throw new IllegalArgumentException("Invalid age");
         this.age = age;
-    }
-
-    public String getName() { return name; }
-
-    @Override
-    public String toString() {
-        return "Name: " + name + ", Age: " + age;
     }
 }

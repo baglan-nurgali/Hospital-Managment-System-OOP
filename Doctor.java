@@ -1,18 +1,21 @@
+package model;
+
 public class Doctor extends Person {
-    private String specialty;
+    private String specialization;
 
-    public Doctor(String name, int age, String specialty) throws InvalidDataException {
-        super(name, age);
-        this.specialty = specialty;
+    public Doctor(int id, String name, int age, String specialization) {
+        super(id, name, age);
+        setSpecialization(specialization);
     }
 
     @Override
-    public void performAction() {
-        System.out.println("Doctor " + name + " is examining patients in " + specialty);
+    public void performRole() {
+        System.out.println("Doctor " + getName() + " [" + specialization + "] is working.");
     }
 
-    @Override
-    public String getDetails() {
-        return "[Doctor] " + toString() + ", Specialty: " + specialty;
+    public String getSpecialization() { return specialization; }
+    public void setSpecialization(String specialization) {
+        if (specialization == null || specialization.isEmpty()) throw new IllegalArgumentException("Spec is empty");
+        this.specialization = specialization;
     }
 }

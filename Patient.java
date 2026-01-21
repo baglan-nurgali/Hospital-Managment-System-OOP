@@ -1,18 +1,26 @@
-public class Patient extends Person {
+package model;
+
+public class Patient extends Person implements Examinable {
     private String diagnosis;
 
-    public Patient(String name, int age, String diagnosis) throws InvalidDataException {
-        super(name, age);
+    public Patient(int id, String name, int age, String diagnosis) {
+        super(id, name, age);
+        setDiagnosis(diagnosis);
+    }
+
+    @Override
+    public void performRole() {
+        System.out.println("Patient " + getName() + " is under observation.");
+    }
+
+    @Override
+    public void undergoExamination() {
+        System.out.println("Patient " + getName() + " is being examined for " + diagnosis);
+    }
+
+    public String getDiagnosis() { return diagnosis; }
+    public void setDiagnosis(String diagnosis) {
+        if (diagnosis == null || diagnosis.isEmpty()) throw new IllegalArgumentException("Diagnosis is empty");
         this.diagnosis = diagnosis;
-    }
-
-    @Override
-    public void performAction() {
-        System.out.println("Patient " + name + " is taking prescribed medication.");
-    }
-
-    @Override
-    public String getDetails() {
-        return "[Patient] " + toString() + ", Diagnosis: " + diagnosis;
     }
 }
