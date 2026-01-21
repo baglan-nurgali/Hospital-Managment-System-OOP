@@ -1,5 +1,5 @@
-import menu.Menu;
-import menu.HospitalMenu;
+import model.menu.Menu;
+import model.menu.HospitalMenu;
 
 public class Main {
     public static void main(String[] args) {
