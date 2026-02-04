@@ -1,5 +1,6 @@
 package menu;
 
+
 import model.*;
 import java.util.ArrayList ;
 import java.util.Scanner;
@@ -74,4 +75,7 @@ public  class HospitalMenu implements Menu {
         }
         System.out.println("Appointment created (Stub logic).");
     }
-}
+
+        }
+
+
