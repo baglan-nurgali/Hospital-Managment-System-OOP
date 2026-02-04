@@ -6,7 +6,7 @@ import java.sql.SQLException;
 public class DatabaseConnection {
     private static final String URL = "jdbc:postgresql://localhost:5432/hospital_db";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "your_password_here";
+    private static final String PASSWORD = "nf#Y6yX5@hEb^j";
     public static Connection getConnection() {
         Connection connection = null;
         try {
@@ -28,17 +28,7 @@ public class DatabaseConnection {
             }
         }
     }
-    public class TestConnection {
-        public static void main(String[] args) {
-            Connection connection = DatabaseConnection.getConnection();
-            if (connection != null) {
-                System.out.println("Connection test passed! ");
-                DatabaseConnection.closeConnection(connection);
-            } else {
-                System.out.println("Connection test failed! ");
-            }
-        }
-    }
+
 
 }
 
